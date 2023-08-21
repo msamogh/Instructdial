@@ -1,4 +1,5 @@
 {"tasks":["dummy_for_now"],
+ "agreement_tracking": {"datasets": ["gpt_negochat"], "instruction_files": ["agreement_tracking"]},
  "intent_classification":{"datasets":["atis","snips", "intent-clinc", "intent-hwu", "intent-banking"], "instruction_files":["intent_classification"]},
  "intent_classification_fewshot":{"datasets":["intent-clinc-fewshot", "intent-hwu-fewshot", "intent-banking-fewshot"], "instruction_files":["intent_classification_fewshot"]},
  "intent_classification_fewshot_banking":{"datasets":["intent-banking-fewshot"], "instruction_files":["intent_classification_fewshot"]},
@@ -87,6 +88,7 @@
    "emotionlines": {"split":  "train"},
    "woz": {"split": "train"},
    "msre2e": {"split": "train"},
+   "gpt_negochat": {"split": "train"},
    "casino": {"split": "train"},
    "deal": {"split": "train"},
    "qaconv": {"split": "train"},

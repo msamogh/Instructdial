@@ -28,6 +28,7 @@ from data_utils import goemotions_reader, cider_reader, tod_reader, opendialkg_r
 from data_utils import toxichat_reader, bad_reader, buildbreakfix_reader, saferdialogues_reader, gensf_reader
 from data_utils import kvret_reader, camrest676_reader, frames_reader, schemaguided_reader
 from data_utils import wozdst_reader, msre2edst_reader, taskmasterdst_reader, multiwozdst_reader
+from data_utils import gpt_negochat_reader
 
 
 def get_reader(args, dataset):
@@ -243,6 +244,8 @@ def get_reader(args, dataset):
 
     if dataset == 'multiwozdst':
         dataset_reader = multiwozdst_reader.MultiwozDstDataset(settings.MULTIWOZDST_PATH, split=datasetconfig['split'])
+    if dataset == "gpt_negochat":
+        dataset_reader = gpt_negochat_reader.GPTNegochat(settings.GPT_NEGOCHAT_PATH, split=datasetconfig['split'])
 
     dataset_reader.split = datasetconfig['split']
 

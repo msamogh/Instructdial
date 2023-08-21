@@ -17,6 +17,15 @@ import settings
 from constants import SPECIAL_TOKENS
 from datareaders import get_reader
 
+from data_utils import dialoglue_reader
+from data_utils import airdialoglue_reader
+from data_utils import deal_reader
+from data_utils import casino_reader
+from data_utils import empathy_reader
+from data_utils import persuasion_reader
+from data_utils import wow_reader
+from data_utils import gpt_negochat_reader
+
 
 from sequentialize import get_sequence
 logging.basicConfig(
@@ -77,6 +86,7 @@ def read_args():
 
     parser.add_argument("--configfile", default='configs/config1.json', type=str)
     parser.add_argument("--dataset", type=str)
+    parser.add_argument("--task", type=str)
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
 
@@ -85,8 +95,8 @@ def read_examples(args):
     LOGGER.info(config)
         # Data readers
 
-    config['datasets'] = ['eval']
-    for dataset in config['datasets']:
+    # config['datasets'] = ['eval']
+    for dataset in config['dataset_configs']:
         if dataset not in config: continue
         datasetconfig = config[dataset]
         instruction_files = datasetconfig['instruction_files']
@@ -112,11 +122,14 @@ def read_examples(args):
 def test_readers(args):
     # Data readers
     config = json.load(open(args.configfile, 'r'))
+    task = args.task
     dataset = args.dataset
 
-    datasetconfig = config.get(dataset, None)
-    if datasetconfig is not None:
-        instruction_files = datasetconfig.get('instruction_files', [])
+    taskconfig = config.get(task, None)
+    datasetconfig = config["dataset_configs"].get(dataset, None)
+
+    if taskconfig is not None:
+        instruction_files = taskconfig.get('instruction_files', [])
     else:
         instruction_files = []
 
@@ -140,6 +153,9 @@ def test_readers(args):
 
     if dataset=='persuasion':
         dataset_reader = persuasion_reader.PersuasionDataset(settings.PERSUASION_PATH)
+
+    if dataset == 'gpt_negochat':
+        dataset_reader = gpt_negochat_reader.GPTNegochat(split=datasetconfig['split'])
 
     print_examples(dataset_reader)
 
